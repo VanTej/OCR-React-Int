@@ -1,17 +1,59 @@
 import { useContext } from 'react';
-import { SurveyContext } from '../../utils/context';
+import { SurveyContext, ThemeContext } from '../../utils/context';
+import { useFetch } from '../../utils/hooks';
+import { Loader } from '../../utils/style/Atoms';
+import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import colors from '../../utils/style/colors';
+
+const StyledLink = styled(Link)`
+    padding: 1rem;
+    color: white;
+    background-color: ${colors.primary};
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 30px;
+`;
 
 const Results = () => {
-    const {answers} = useContext(SurveyContext);
+    const { theme } = useContext(ThemeContext)
+    const { answers } = useContext(SurveyContext);
+
+    function formatQueryParams(answers) {
+        const answersNumber = Object.keys(answers);
+    
+        return answersNumber.reduce((previousParams, answerNumber, index) => {
+            const isFirstAnswer = index === 0;
+            const separator = isFirstAnswer ? '' : '&';
+            return `${previousParams}${separator}a${answerNumber}=${answers[answerNumber]}`
+        }, '')
+    }
+
+    const { isLoading, data, error } = useFetch(
+        `http://localhost:8000/results/?${formatQueryParams(answers)}`
+    );
+
+    const results = data.resultsData;
+    console.log(results);
+
+    if (error) {
+        return <span>Oups il y a eu un problème</span>;
+    }
 
     return (
-        <div>
-            <h1>Résultats</h1>
-            {Object.keys(answers).map((k) => (
-                <p>{k} : {answers[k] ? 'Oui' : 'Non'}</p>
-            ))}
-        </div> 
-    );    
+        <div className='container'>
+            <h2>Les compétences dont vous avez besoin : {isLoading ? <Loader /> : <span className='text-primary'>{results ? results.map((result) => result.title + ' ') : ''}</span>}</h2>
+            <StyledLink to="/freelances">Découvrez nos talents</StyledLink>
+            <ul>
+            {results ?
+            results.map((result, index) => (
+            <li key={index}><h3 className='text-primary'>{result.title}</h3> <p>{result.description}</p></li>
+            )) :
+            ''}
+            </ul>
+
+        </div>
+    );
 };
 
 export default Results;

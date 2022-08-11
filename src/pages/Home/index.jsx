@@ -18,7 +18,6 @@ const StyledHeader = styled.header`
     align-items: center;
     gap: 3rem;
     height: 80vh;
-    background-color: ${colors.backgroundLight};
 `;
 
 const Title = styled.div`

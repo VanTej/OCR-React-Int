@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../utils/style/colors';
 import logo from '../assets/dark-logo.png'
+import lightLogo from '../assets/light-logo.png'
+import { useTheme } from "../utils/hooks";
 
 const StyledLink = styled(Link)`
     padding: 1rem;
@@ -29,9 +31,11 @@ const Logo = styled.img`
 `;
 
 const Header = () => {
+    const { theme } = useTheme();
+
     return (
         <Nav>
-            <Logo src={logo} alt="logo shiny" />
+            <Logo src={theme === 'light' ? logo : lightLogo} alt="logo shiny" />
             <Links>
                 <StyledLink to="/">Accueil</StyledLink>
                 <StyledLink to="/freelances">Profils</StyledLink>
