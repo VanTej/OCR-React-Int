@@ -2,11 +2,23 @@ import PropTypes from 'prop-types';
 import DefaultPicture from '../../assets/profile.png';
 import styled from 'styled-components';
 import colors from '../../utils/style/colors';
+import { useTheme } from '../../utils/hooks';
+import { useState } from 'react';
 
 const CardLabel = styled.span`
     color: #5843e4;
     font-size: 22px;
     font-weight: bold;
+`;
+
+const CardTitle = styled.h1`
+    color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
+    font-size: 22px;
+    font-weight: normal;
+    align-self: center;
+    height: 25px;
+    display: flex;
+    align-items: center;
 `;
 
 const CardImage = styled.img`
@@ -33,11 +45,14 @@ const CardWrapper = styled.div`
 `;
 
 function Card({ label, title, picture }) {
+    const { theme } = useTheme();
+    const [isFavorite, setIsFavorite] = useState(false);
+    const star = isFavorite ? '⭐️' : '';
     return (
-        <CardWrapper >
-            <CardLabel>{label}</CardLabel>
+        <CardWrapper theme={theme} onClick={() => setIsFavorite(!isFavorite)}>
+            <CardLabel theme={theme}>{label}</CardLabel>
             <CardImage src={picture} alt="freelance" height={80} width={80} />
-            <span>{title}</span>
+            <CardTitle theme={theme}>{star} {title} {star}</CardTitle>
         </CardWrapper>
     );
 }
