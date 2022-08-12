@@ -33,7 +33,7 @@ const CardWrapper = styled.div`
     align-items: center;
     justify-content: space-around;
     padding: 15px;
-    background-color: ${colors.backgroundLight};
+    background-color: ${({ theme }) => (theme === 'light' ? colors.backgroundLight : '#2F2E41')};
     border-radius: 30px;
     width: 350px;
     transition: 200ms;

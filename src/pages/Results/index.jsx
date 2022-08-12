@@ -23,14 +23,14 @@ export function formatJobList(title, listLength, index) {
 }
 
 export function formatQueryParams(answers) {
-        const answersNumber = Object.keys(answers);
+    const answersNumber = Object.keys(answers);
 
-        return answersNumber.reduce((previousParams, answerNumber, index) => {
-            const isFirstAnswer = index === 0;
-            const separator = isFirstAnswer ? '' : '&';
-            return `${previousParams}${separator}a${answerNumber}=${answers[answerNumber]}`;
-        }, '');
-    }
+    return answersNumber.reduce((previousParams, answerNumber, index) => {
+        const isFirstAnswer = index === 0;
+        const separator = isFirstAnswer ? '' : '&';
+        return `${previousParams}${separator}a${answerNumber}=${answers[answerNumber]}`;
+    }, '');
+}
 
 const Results = () => {
     const { theme } = useContext(ThemeContext);
@@ -63,8 +63,8 @@ const Results = () => {
             </h2>
             <StyledLink to="/freelances">Découvrez nos talents</StyledLink>
             <ul>
-                {results
-                    ? results.map((result, index) => (
+                {results ? 
+                    results.map((result, index) => (
                           <li key={index}>
                               <h3 className="text-primary">
                                   {formatJobList(

@@ -2,7 +2,7 @@ import Card from '../../components/Card';
 import styled from 'styled-components';
 import colors from '../../utils/style/colors';
 import { Loader } from '../../utils/style/Atoms';
-import { useFetch } from '../../utils/hooks';
+import { useFetch, useTheme } from '../../utils/hooks';
 
 const CardsContainer = styled.div`
     display: grid;
@@ -25,6 +25,8 @@ const MutedText = styled.p`
 `;
 
 const Freelances = () => {
+    const { theme } = useTheme();
+
     const { isLoading, data, error } = useFetch(
         `http://localhost:8000/freelances`
     );
@@ -41,7 +43,7 @@ const Freelances = () => {
                 Chez Shinny nous réunissons les meilleurs profils pour vous.
             </MutedText>
             {isLoading ? (
-                <Loader />
+                <Loader data-testId='loader'/>
             ) : (
                 <CardsContainer rows={Math.ceil(freelanceProfiles.length / 2)}>
                     {freelanceProfiles.map((profile, index) => (

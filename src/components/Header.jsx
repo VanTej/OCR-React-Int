@@ -21,7 +21,7 @@ const Nav = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: inset 0px -0.5px 5px #c2c3c9;
+    box-shadow: inset 0px -2px 2px #c2c3c989;
 `;
 const Links = styled.div`
     display: flex;
